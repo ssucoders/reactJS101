@@ -12,6 +12,7 @@ class TasksManager extends Component {
         this.handleKeyDown = this.handleKeyDown.bind(this)
         this.addTask = this.addTask.bind(this)
         this.updateTaskStatus = this.updateTaskStatus.bind(this)
+        this.deleteTask = this.deleteTask.bind(this)
     }
 
     handleChange(e){
@@ -48,6 +49,14 @@ class TasksManager extends Component {
             value:""
         })
     }
+    deleteTask(index){
+        this.setState((state)=>{
+            let updatedTasks = state.tasks.filter((el, i)=>{
+                return i!=index;
+            })
+            return {tasks: updatedTasks}
+        })
+     }
 
     render(){
         let tasks = this.state.tasks;
@@ -57,7 +66,7 @@ class TasksManager extends Component {
 
         let tasklist = tasks.map((el, i)=> {
             return (
-                <Task key={i} data-index={i} item={el} onChange={this.updateTaskStatus}/>
+                <Task key={i} data-index={i} item={el} deleteTask={this.deleteTask} onChange={this.updateTaskStatus}/>
             )
         });
         return (
